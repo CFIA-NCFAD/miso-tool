@@ -61,7 +61,7 @@ miso-tool --help
 │                                                                              [default: None]                                                                                                                                                 │
 │    --force                          -f                                       Overwrite existing files                                                                                                                                        │
 │    --verbose                        -v                                                                                                                                                                                                       │
-│    --version                        -V                                       Print 'gfflu version 0.0.1' and exit                                                                                                                            │
+│    --version                        -V                                       Print 'gfflu version 0.0.2' and exit                                                                                                                            │
 │    --install-completion                     [bash|zsh|fish|powershell|pwsh]  Install completion for the specified shell.                                                                                                                     │
 │                                                                              [default: None]                                                                                                                                                 │
 │    --show-completion                        [bash|zsh|fish|powershell|pwsh]  Show completion for the specified shell, to copy it or customize the installation.                                                                              │
@@ -69,7 +69,7 @@ miso-tool --help
 │    --help                                                                    Show this message and exit.                                                                                                                                     │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
- miso-tool version 0.0.1; Python 3.11.5
+ miso-tool version 0.0.2; Python 3.11.5
 
 ```
 

@@ -19,7 +19,7 @@ def get_nanopore_sample_run_infos(filtered_entries):
     out = []
     for entry in filtered_entries:
         barcode = entry["barcode"]
-        if barcode.startswith("barcode"):
+        if barcode and barcode.startswith("barcode"):
             out.append(entry)
             continue
         flowcell = entry["flowcell"]

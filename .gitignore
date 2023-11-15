@@ -113,4 +113,9 @@ ENV/
 .~lock*#
 
 # default outdir
-gfflu-outdir/
+miso-tool-outdir/
+
+samples*.json
+runs*.json
+
+sample-run-info.csv
