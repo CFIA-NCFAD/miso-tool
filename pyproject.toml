@@ -24,6 +24,7 @@ classifiers = [
 ]
 dependencies = [
   "typer",
+  "rich",
   "pandas",
   "tqdm",
   "pendulum",
