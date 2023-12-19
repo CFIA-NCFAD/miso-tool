@@ -205,10 +205,10 @@ def get_sample_barcode(sampleid: str, run: dict) -> Tuple[Optional[str], Optiona
                     return None, None
                 barcode_two = sample.get("barcode_two", None)
                 seqkit = run.get("sequencingKit", None)
-                if seqkit and seqkit == "SQK-RBK110-96":
+                if seqkit is not None and seqkit in ("SQK-RBK110-96", "SQK-RBK114-96"):
                     barcode = get_rbk11096_barcode(barcode)
                     if barcode is None:
-                        error_msg = f"Could not find RBK110-96 barcode for {sampleid} in run {run['name']}"
+                        error_msg = f"Could not find RBK110-96/RBK114-96 barcode for {sampleid} in run {run['name']}"
                         raise ValueError(error_msg)
                     return barcode, None
                 else:
