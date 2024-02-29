@@ -12,8 +12,13 @@ illumina_read_regex = re.compile(r"^([\w\-\_]+)_S\d+_L\d+_R[12]_001\.fastq\.gz$"
 logger = logging.getLogger(__name__)
 
 
-def get_illumina_samplesheet_path(illumina_run_path: Path) -> Path:
-    return illumina_run_path / "Data/Intensities/BaseCalls/SampleSheet.csv"
+def get_illumina_samplesheet_path(illumina_run_path: Path) -> Path | None:
+    sample_sheet_path = illumina_run_path / "Data/Intensities/BaseCalls/SampleSheet.csv"
+    if sample_sheet_path.exists():
+        return sample_sheet_path
+    for path in illumina_run_path.rglob("SampleSheetUsed.csv"):
+        return path
+    return None
 
 
 def read_illumina_samplesheet(path: Path) -> pd.DataFrame:
