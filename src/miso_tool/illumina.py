@@ -2,6 +2,7 @@ import logging
 import re
 from collections import defaultdict
 from pathlib import Path
+from typing import Optional
 
 import pandas as pd
 from tqdm import tqdm
@@ -12,8 +13,13 @@ illumina_read_regex = re.compile(r"^([\w\-\_]+)_S\d+_L\d+_R[12]_001\.fastq\.gz$"
 logger = logging.getLogger(__name__)
 
 
-def get_illumina_samplesheet_path(illumina_run_path: Path) -> Path:
-    return illumina_run_path / "Data/Intensities/BaseCalls/SampleSheet.csv"
+def get_illumina_samplesheet_path(illumina_run_path: Path) -> Optional[Path]:
+    sample_sheet_path = illumina_run_path / "Data/Intensities/BaseCalls/SampleSheet.csv"
+    if sample_sheet_path.exists():
+        return sample_sheet_path
+    for path in illumina_run_path.rglob("SampleSheetUsed.csv"):
+        return path
+    return None
 
 
 def read_illumina_samplesheet(path: Path) -> pd.DataFrame:
@@ -34,6 +40,9 @@ def link_sample_ids_to_reads(
     for run_name, run_path in tqdm(illumina_runs, desc="Processing Illumina runs"):
         try:
             ss = get_illumina_samplesheet_path(run_path)
+            if ss is None:
+                logger.warning(f"No samplesheet found for run '{run_name}' at '{run_path}'")
+                continue
             df_illumina_ss = read_illumina_samplesheet(ss)
             illumina_run_to_samplesheet[run_name] = df_illumina_ss
             id_to_path = defaultdict(list)
@@ -107,6 +116,9 @@ def to_illumina_nextflow_df(illumina_sample_run_infos: list[dict]) -> tuple[pd.D
     logger.info(f"Checking that all {len(runs)} Illumina runs have a SampleSheet.csv file that can be read.")
     for run_name, run_path in tqdm(runs, desc="Checking Illumina runs"):
         ss = get_illumina_samplesheet_path(run_path)
+        if ss is None:
+            logger.warning(f"No samplesheet found for run '{run_name}' at '{run_path}'")
+            continue
         if not ss.exists() or not ss.is_file() or not ss.stat().st_size > 0:
             error_msg = f"Could not find samplesheet.csv for {run_name} at '{ss}'"
             raise FileNotFoundError(error_msg)
