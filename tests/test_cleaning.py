@@ -6,7 +6,7 @@ def test_fix_lsts_sample_name():
         ("WIN-AH-2021-OTH-1-1", "WIN-AH-2021-OTH-0001-1"),
         ("WIN-AH-2021-OTH-123-1-1", "WIN-AH-2021-OTH-0123-1-1"),
         ("WIN-AH-2021-OTH-0023-a bunch of words", "WIN-AH-2021-OTH-0023-a-bunch-of-words"),
-        ("2021-OTH-1-(shh) - it\'s a secret!", "WIN-AH-2021-OTH-0001-shh-it-s-a-secret"),
+        ("2021-OTH-1-(shh) - it's a secret!", "WIN-AH-2021-OTH-0001-shh-it-s-a-secret"),
         ("2021-OTH-1-1", "WIN-AH-2021-OTH-0001-1"),
         ("nothing wrong here", "nothing-wrong-here"),
         ("another #$%^&*()+sample", "another-sample"),
