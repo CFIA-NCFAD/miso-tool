@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional, Tuple
 
-from miso_tool.nanopore import get_rbk11096_barcode
+from miso_tool.nanopore import get_nbd11496_barcode, get_rbk11096_barcode
 
 logger = logging.getLogger(__name__)
 
@@ -209,6 +209,12 @@ def get_sample_barcode(sampleid: str, run: dict) -> Tuple[Optional[str], Optiona
                     barcode = get_rbk11096_barcode(barcode)
                     if barcode is None:
                         error_msg = f"Could not find RBK110-96/RBK114-96 barcode for {sampleid} in run {run['name']}"
+                        raise ValueError(error_msg)
+                    return barcode, None
+                elif seqkit is not None and seqkit in ("SQK-NBD114-96",):
+                    barcode = get_nbd11496_barcode(barcode)
+                    if barcode is None:
+                        error_msg = f"Could not find NBD114-96 barcode for {sampleid} in run {run['name']}"
                         raise ValueError(error_msg)
                     return barcode, None
                 else:
