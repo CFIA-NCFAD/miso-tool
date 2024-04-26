@@ -1,6 +1,6 @@
 import pandas as pd
 
-from miso_tool.const.nanopore import rbk11096
+from miso_tool.const.nanopore import nbd114_96, rbk11096
 from miso_tool.util import revcomp
 
 
@@ -11,6 +11,17 @@ def get_rbk11096_barcode(barcode: str) -> str | None:
         rc = revcomp(barcode)
         if rc in rbk11096:
             return rbk11096[rc]
+        else:
+            return None
+
+
+def get_nbd11496_barcode(barcode: str) -> str | None:
+    if barcode in nbd114_96:
+        return nbd114_96[barcode]
+    else:
+        rc = revcomp(barcode)
+        if rc in nbd114_96:
+            return nbd114_96[rc]
         else:
             return None
 
